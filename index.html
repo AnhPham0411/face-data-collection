@@ -271,4 +271,29 @@
             data.resources.forEach(img => {
                 // img.public_id dạng: "face_dataset/TuanAnh/TuanAnh_1" -> Lấy chữ "TuanAnh"
                 const parts = img.public_id.split('/');
-                if(parts.
+                if(parts.length >= 2) usersSet.add(parts[1]);
+            });
+
+            if(usersSet.size === 0) {
+                completedListEl.innerHTML = '<div style="text-align:center; color:#b2bec3; margin-top:20px;">Chưa có dữ liệu</div>';
+            } else {
+                Array.from(usersSet).forEach((user, index) => {
+                    completedListEl.innerHTML += `
+                    <li class="user-item">
+                        <div class="user-info"><b>${index + 1}. ${user}</b></div>
+                        <span style="color: #00b894; font-size: 18px;">☁️ Online</span>
+                    </li>`;
+                });
+            }
+        } catch (err) {
+            console.warn(err);
+            completedListEl.innerHTML = '<div style="font-size:13px; color:#d63031; text-align:center; margin-top:20px;">Chưa bật "Resource list" trong Settings<br>hoặc chưa có dữ liệu mới.</div>';
+        } finally {
+            loading.style.display = 'none';
+        }
+    }
+
+    initCamera();
+</script>
+</body>
+</html>
